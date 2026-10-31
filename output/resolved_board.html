@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campus Customs: Resolved Board</title>
+<style>
+  :root { --bg:#f7f9fc; --card:#fff; --text:#0f1b2d; --muted:#5b6b82; --line:#dde5f0; --ox:#00356b; --mustard:#f59e0b; --forest:#15803d; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.6 -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 32px 24px 64px; }
+  header { background: var(--ox); color: #fff; border-radius: 14px; padding: 20px 24px; }
+  header h1 { margin: 0; font-size: 26px; }
+  header p { margin: 4px 0 0; color: #cfe0f7; }
+  .stats { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0; }
+  .stat { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 16px; }
+  .stat .k { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+  .stat .v { font-size: 20px; font-weight: 750; }
+  .stat.cash .v { color: var(--forest); }
+  table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+  th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--line); font-size: 15px; }
+  th { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+  td.amt { text-align: right; font-variant-numeric: tabular-nums; }
+  .shot { margin: 26px 0 0; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; box-shadow: 0 4px 16px rgba(0,30,70,.07); }
+  figcaption { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+  figcaption h2 { margin: 0; font-size: 19px; }
+  figcaption p { margin: 2px 0 0; color: var(--muted); font-size: 15px; }
+  .n { flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--ox); color: #fff; display: grid; place-items: center; font-weight: 800; }
+  img { width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); display: block; }
+  footer { margin-top: 28px; color: var(--muted); font-size: 14px; }
+  code { background: #eef3fa; padding: 1px 6px; border-radius: 5px; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Campus Customs — Resolved Board</h1>
+    <p>Screenshots of the React desk (<code style="background:rgba(255,255,255,.15);color:#fff">frontend/</code>) during the official Problem 9 run: the Boss ran the whole board, every ticket resolved, and every payment and customer draft was decided by a human, using the numbered steps on the cards.</p>
+  </header>
+  <div class="stats">
+    <div class="stat"><div class="k">Starting checking</div><div class="v">$3,400.00</div></div>
+    <div class="stat"><div class="k">Paid out (3 human-signed payments)</div><div class="v">−$3,248.00</div></div>
+    <div class="stat cash"><div class="k">Ending checking</div><div class="v">$152.00 ✓</div></div>
+    <div class="stat"><div class="k">Model / tokens</div><div class="v">gpt-6-luna · 128,925</div></div>
+  </div>
+  <table>
+    <tr><th>Ticket</th><th>Subject</th><th>Flow (Boss first)</th><th>Final</th><th style="text-align:right">Tokens</th></tr>
+    <tr><td>#101</td><td>Bulldog tee</td><td>Boss → Inventory → Accounting, Customer Service</td><td><b>resolved</b> · signed by jessica horstmann</td><td class="amt">46,563</td></tr>
+<tr><td>#102</td><td>Rent due</td><td>Boss → Facilities → Accounting</td><td><b>resolved</b> · signed by jessica horstmann</td><td class="amt">23,740</td></tr>
+<tr><td>#103</td><td>Bulk hoodie discount</td><td>Boss → Accounting → Inventory, Customer Service</td><td><b>resolved</b> · signed by jessica horstmann</td><td class="amt">51,741</td></tr>
+  </table>
+    <figure class="shot">
+      <figcaption><span class="n">1</span><div><h2>The board after the run: all three tickets ALL DONE</h2><p>The Boss triaged (#102 → #101 → #103) and worked every ticket in that order with one click. The human then did the numbered steps left to right: rent PAID, invoice #501 PAID, tee restock PAID, hoodie restock VOID (the pay tool refused it: not enough cash), and both customer drafts APPROVED (with an undo link, since drafts are never sent). Checking $152.00 in the top bar.</p></div></figcaption>
+      <a href="resolved_board_images/01_all_done.png" target="_blank"><img src="resolved_board_images/01_all_done.png" alt="The board after the run: all three tickets ALL DONE" loading="lazy"></a>
+    </figure>
+    <figure class="shot">
+      <figcaption><span class="n">2</span><div><h2>#102 rent: resolved and all done</h2><p>Summary in work order: why the Boss put it first (rent $2,400 due in 2 days), then Boss routes → Facilities verifies the lease → Accounting prepares the $2,400 check → Boss makes the final call.</p></div></figcaption>
+      <a href="resolved_board_images/02_102_summary.png" target="_blank"><img src="resolved_board_images/02_102_summary.png" alt="#102 rent: resolved and all done" loading="lazy"></a>
+    </figure>
+    <figure class="shot">
+      <figcaption><span class="n">3</span><div><h2>#101 Bulldog tee: resolved and all done</h2><p>Boss routes → Inventory (size S out, vendor blocked by invoice #501) → Accounting (prepares #501 and rent) → Customer Service (draft to Tauhid) → Boss final call. Invoice #501 and the $8 tee restock were steps 2 and 3.</p></div></figcaption>
+      <a href="resolved_board_images/03_101_summary.png" target="_blank"><img src="resolved_board_images/03_101_summary.png" alt="#101 Bulldog tee: resolved and all done" loading="lazy"></a>
+    </figure>
+    <figure class="shot">
+      <figcaption><span class="n">4</span><div><h2>#103 bulk hoodies: resolved and all done</h2><p>Boss routes → Accounting (15% off, $49.30) → Inventory (8 of 20 on hand) → Customer Service → Boss final call. The $264 hoodie restock was refused by the pay tool ($152 left) and voided.</p></div></figcaption>
+      <a href="resolved_board_images/04_103_summary.png" target="_blank"><img src="resolved_board_images/04_103_summary.png" alt="#103 bulk hoodies: resolved and all done" loading="lazy"></a>
+    </figure>
+    <figure class="shot">
+      <figcaption><span class="n">5</span><div><h2>Human review of the Yale AI Club draft</h2><p>Left: the draft, approved by the human with no edits and never emailed. Right: only what the agents actually used: the request, Accounting&#x27;s note to Customer Service, and the facts pulled from the shop database.</p></div></figcaption>
+      <a href="resolved_board_images/05_103_draft_review.png" target="_blank"><img src="resolved_board_images/05_103_draft_review.png" alt="Human review of the Yale AI Club draft" loading="lazy"></a>
+    </figure>
+    <figure class="shot">
+      <figcaption><span class="n">6</span><div><h2>Human review of the draft to Tauhid</h2><p>Offers the in-stock sizes (M, L, XL) and a follow-up on size S with no date promised. No tool names, SKU codes or money talk: the new Customer Service rule and the code check in save_customer_draft keep internal text out of customer messages.</p></div></figcaption>
+      <a href="resolved_board_images/06_101_draft_review.png" target="_blank"><img src="resolved_board_images/06_101_draft_review.png" alt="Human review of the draft to Tauhid" loading="lazy"></a>
+    </figure>
+  <footer>Ending balance matches <code>cash_accounts.checking</code> = 152.00 in <code>data/campus_customs_new.db</code>. Full details: <code>output/resolved_tickets.json</code>, the Actual and Cash tabs of <code>output/desk_tickets.html</code>, and audit entries #2440–#2638 in <code>output/audit_trail.json</code>.</footer>
+</div>
+</body>
+</html>

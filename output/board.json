@@ -1,0 +1,712 @@
+{
+  "runs": {
+    "102": {
+      "run_id": "51f84357f8",
+      "status": "done",
+      "started_at": "2026-10-31T15:17:56+00:00",
+      "finished_at": "2026-10-31T15:17:59+00:00",
+      "result": {
+        "run_id": "51f84357f8",
+        "ticket_id": 102,
+        "model": "gpt-6-luna",
+        "ok": true,
+        "decision": {
+          "ticket_id": 102,
+          "decision": "Prepare the $2,400 rent payment for human approval.",
+          "reasoning": "Facilities confirmed lease 1 matches the Elm City Properties notice and shows rent due 2026-09-02. Accounting prepared the payment; checking would remain at $1,000, above the $100 buffer.",
+          "final_status": "resolved",
+          "agents_used": [
+            "facilities",
+            "accounting"
+          ],
+          "next_steps": [
+            "Human owner: review and approve the prepared $2,400 payment."
+          ]
+        },
+        "error": null,
+        "handoffs": [
+          {
+            "from_agent": "boss",
+            "to_agent": "facilities",
+            "depth": 1,
+            "task": "Work ticket #102: rent notice from Elm City Properties says shop rent is due in 2 days (ticket dated 2026-08-31; lease_id 1). Check lease/rent amount, due date and relevant facts. Coordinate with Accounting for cash/payment preparation as needed, include source for every number, note approval needed, and report whether work is complete. Customer isn't waiting.",
+            "report": {
+              "summary": "Ticket #102 checks out against lease 1. Accounting prepared the rent payment for human approval; the work is complete pending approval.",
+              "findings": [
+                "Notice says rent is due in 2 days (get_ticket); shop date is 2026-08-31 (get_ticket), and lease 1 also says due in 2 days, on 2026-09-02 (get_lease).",
+                "Ticket requester is Elm City Properties (get_ticket), matching lease 1's landlord, Elm City Properties (get_lease).",
+                "The notice does not state an amount (get_ticket); lease 1 monthly rent is $2,400 (get_lease).",
+                "No rent payment is listed for lease 1 (get_payments).",
+                "Accounting reports it prepared $2,400 for payment; checking would retain $1,000 against the $100 minimum buffer. Accounting reports the payment is awaiting approval (Accounting report; cash balance and preparation details from its tools)."
+              ],
+              "recommendations": [
+                "Review and approve Accounting's prepared payment."
+              ],
+              "needs_human": [
+                "Human approval is required before the payment can be made."
+              ]
+            },
+            "error": null
+          },
+          {
+            "from_agent": "facilities",
+            "to_agent": "accounting",
+            "depth": 2,
+            "task": "Prepare rent payment for ticket #102, lease 1: Elm City Properties, Chapel Street shop, $2,400 monthly rent due 2026-09-02. Verified requester matches lease landlord (ticket/get_lease), notice says due in 2 days and lease says 2 days / 2026-09-02 from date_today 2026-08-31, amount is consistent (ticket doesn't state an amount; lease monthly rent $2,400), and no rent payment exists (get_payments kind rent ref_id 1). Prepare only for human approval; report cash/approval status.",
+            "report": {
+              "summary": "Prepared the rent payment for ticket #102; it is awaiting human approval. The payment is affordable and leaves checking above the required buffer.",
+              "findings": [
+                "Ticket #102 requester is Elm City Properties and references lease 1 (get_ticket).",
+                "Lease 1 is for the Chapel Street shop; landlord is Elm City Properties, rent is $2,400, due 2026-09-02 in 2 days (get_lease).",
+                "No rent payment exists for lease 1 (get_payments).",
+                "Checking balance is $3,400 as of 2026-08-31 (get_cash_balance).",
+                "Prepared $2,400 to Elm City Properties from checking; cash after payment would be $1,000, above the $100 buffer; status is awaiting human approval (prepare_payment)."
+              ],
+              "recommendations": [
+                "Review and approve the prepared rent payment."
+              ],
+              "needs_human": [
+                "Human approval is required before the payment can be made."
+              ]
+            },
+            "error": null
+          }
+        ],
+        "tools_used": [
+          "get_cash_balance",
+          "get_lease",
+          "get_payments",
+          "get_ticket",
+          "prepare_payment",
+          "update_ticket"
+        ],
+        "payment_requests": [
+          {
+            "kind": "rent",
+            "ref_id": 1,
+            "payee": "Elm City Properties",
+            "description": "Rent for Chapel Street shop",
+            "amount": 2400.0,
+            "due_date": "2026-09-02",
+            "overdue": false,
+            "account": "checking",
+            "cash_before": 3400.0,
+            "cash_after_if_paid": 1000.0,
+            "can_afford": true,
+            "below_buffer": false,
+            "requested_by": "accounting",
+            "status": "awaiting_human_approval"
+          }
+        ],
+        "purchase_orders": [],
+        "customer_drafts": [],
+        "usage": {
+          "model_requests": 10,
+          "input_tokens": 22654,
+          "output_tokens": 1086
+        },
+        "started_at": "2026-10-31T15:17:56+00:00",
+        "finished_at": "2026-10-31T15:17:59+00:00"
+      },
+      "signed_by": "jessica horstmann",
+      "signed_at": "2026-10-31T15:19:34+00:00"
+    },
+    "101": {
+      "run_id": "bf00827117",
+      "status": "done",
+      "started_at": "2026-10-31T15:17:59+00:00",
+      "finished_at": "2026-10-31T15:18:24+00:00",
+      "result": {
+        "run_id": "bf00827117",
+        "ticket_id": 101,
+        "model": "gpt-6-luna",
+        "ok": true,
+        "decision": {
+          "ticket_id": 101,
+          "decision": "Size S is unavailable today. Keep the order pending restock: the $8 purchase order is drafted, but Bulldog Print Co cannot ship until invoice #501 is paid. A customer message offering available sizes M, L, and XL has been drafted without promising a restock date.",
+          "reasoning": "Inventory reported 0 units of CC-TEE-WHITE size S, a shortfall of 1. Invoice #501 is $840, due 2026-08-28 and 3 days overdue as of 2026-08-31; the vendor will not ship while it remains unpaid. The PO for 1 size S totals $8. Accounting reports that paying rent first and then this invoice would leave $160, above the $100 checking buffer. No payment or PO has been sent.",
+          "final_status": "resolved",
+          "agents_used": [
+            "inventory",
+            "accounting",
+            "customer_service"
+          ],
+          "next_steps": [
+            "Human: follow the reported rent-payment priority, then approve or decline the prepared $840 payment for invoice #501.",
+            "Human: review and approve or decline the $8 purchase-order draft; it cannot ship until the invoice is paid.",
+            "Customer service: keep the saved customer message as a draft; offer the listed alternative sizes if approved."
+          ]
+        },
+        "error": null,
+        "handoffs": [
+          {
+            "from_agent": "boss",
+            "to_agent": "inventory",
+            "depth": 1,
+            "task": "Work ticket #101 customer order: requester Tauhid Zaman needs 1 CC-TEE-WHITE size S (Bulldog tee). Check stock/restock options and any linked invoice/vendor blocking shipment; handle needed accounting/customer-service handoffs yourself. Report sources, decision, approvals needed, and customer draft if waiting.",
+            "report": {
+              "summary": "Ticket #101 requests 1 CC-TEE-WHITE size S. There are none on hand, so the requested size cannot be handed over today. A restock draft is prepared, but Bulldog Print Co is blocked by unpaid invoice #501; arrival timing depends on when that invoice is paid.",
+              "findings": [
+                "Ticket #101 requests 1 CC-TEE-WHITE size S and links invoice #501 (get_ticket).",
+                "CC-TEE-WHITE size S: 0 on hand; shortfall: 1. Partial order available today: 0 of 1. Alternatives: M 5, L 3, XL 2 (check_stock).",
+                "Bulldog Print Co is the apparel reprint vendor; it has a 5-day lead time and cannot ship while invoice #501 is open. Invoice #501 is $840, due 2026-08-28 and 3 days overdue as of 2026-08-31 (get_vendor_status).",
+                "Draft purchase order for 1 size S: unit cost $8, total $8; it is not shippable yet and has no arrival date until invoice payment (draft_purchase_order).",
+                "Accounting prepared invoice #501 payment for human approval; no payment has been made. Accounting reports that approval of rent payment first and then the invoice payment would leave $160, above the $100 buffer (accounting report).",
+                "Customer service saved a draft telling the requester size S is unavailable today, offering sizes M/L/XL, and avoiding a firm restock promise (customer_service report)."
+              ],
+              "recommendations": [
+                "Approve the prepared invoice #501 payment to unblock Bulldog Print Co; only after payment can its 5-day lead time run, so estimate arrival as payment date plus 5 days.",
+                "Review/approve the $8 purchase-order draft. Offer the in-stock size alternatives while awaiting a reliable restock date."
+              ],
+              "needs_human": [
+                "Approve payment of invoice #501 (and follow accounting's payment priority recommendation).",
+                "Approve the draft purchase order; it has not been sent to the vendor.",
+                "Decide whether to offer an alternative size to the customer."
+              ]
+            },
+            "error": null
+          },
+          {
+            "from_agent": "inventory",
+            "to_agent": "accounting",
+            "depth": 2,
+            "task": "Ticket #101 restock blocker: vendor Bulldog Print Co (vendor 1) cannot ship CC-TEE-WHITE size S because open invoice #501 for $840.00, due 2026-08-28 and 3 days overdue as of 2026-08-31 (get_vendor_status). Please prepare payment for human approval; do not pay. Once payment is approved/paid, vendor lead time is 5 days, so arrival is payment date + 5 days.",
+            "report": {
+              "summary": "Prepared the rent and invoice payments for human approval, in the required priority order. Neither payment has been made. If both are paid, checking will have $160 left, above the $100 buffer.",
+              "findings": [
+                "Checking balance: $3,400 as of 2026-08-31 (get_cash_balance).",
+                "Lease 1 rent: $2,400 due 2026-09-02, in 2 days (get_lease). Rent payment prepared; its standalone cash-after figure is $1,000 (prepare_payment).",
+                "Invoice 501 to Bulldog Print Co: $840, open and 3 days overdue as of 2026-08-31 (get_invoice). No prior payment found (get_payments). Invoice payment prepared; its standalone cash-after figure is $2,560 (prepare_payment).",
+                "Sequentially, paying rent first leaves $1,000; paying invoice next leaves $160, which is $60 above the $100 buffer. This sequential figure is calculated from the tool-reported starting balance and payment amounts."
+              ],
+              "recommendations": [
+                "Approve rent payment first, then invoice 501. Paying the invoice clears the vendor bill blocking shipment, but the payment date\u2014and therefore the 5-day arrival estimate\u2014depends on when you approve and pay it."
+              ],
+              "needs_human": [
+                "Approve both prepared payments; no payment has been made."
+              ]
+            },
+            "error": null
+          },
+          {
+            "from_agent": "inventory",
+            "to_agent": "customer_service",
+            "depth": 2,
+            "task": "Please draft (do not send) a response for ticket #101. Requested 1 CC-TEE-WHITE size S; on hand S=0, so cannot hand over requested size today. Alternatives in stock: M=5, L=3, XL=2 (check_stock). Bulldog Print Co is correct apparel vendor, but blocked by open invoice #501; accounting has prepared payment for approval, not paid. Vendor lead time 5 days after payment, so no reliable arrival date until payment date is known. Offer in-stock alternatives without promising S timing.",
+            "report": {
+              "summary": "Saved a draft for Tauhid Zaman explaining that size S is unavailable today, offering in-stock sizes M, L, and XL, and saying we\u2019ll follow up when we have a reliable restock update.",
+              "findings": [
+                "Ticket #101 is a customer order for one white Bulldog tee in size S; requester is Tauhid Zaman (get_ticket).",
+                "Size S is unavailable; sizes M, L, and XL are alternatives in stock, per the inventory report in the request."
+              ],
+              "recommendations": [],
+              "needs_human": []
+            },
+            "error": null
+          }
+        ],
+        "tools_used": [
+          "check_stock",
+          "draft_purchase_order",
+          "get_cash_balance",
+          "get_invoice",
+          "get_lease",
+          "get_payments",
+          "get_ticket",
+          "get_vendor_status",
+          "prepare_payment",
+          "update_ticket"
+        ],
+        "payment_requests": [
+          {
+            "kind": "rent",
+            "ref_id": 1,
+            "payee": "Elm City Properties",
+            "description": "Rent for Chapel Street shop",
+            "amount": 2400.0,
+            "due_date": "2026-09-02",
+            "overdue": false,
+            "account": "checking",
+            "cash_before": 3400.0,
+            "cash_after_if_paid": 1000.0,
+            "can_afford": true,
+            "below_buffer": false,
+            "requested_by": "accounting",
+            "status": "awaiting_human_approval"
+          },
+          {
+            "kind": "invoice",
+            "ref_id": 501,
+            "payee": "Bulldog Print Co",
+            "description": "Rush reprint CC-TEE-WHITE S",
+            "amount": 840.0,
+            "due_date": "2026-08-28",
+            "overdue": true,
+            "account": "checking",
+            "cash_before": 3400.0,
+            "cash_after_if_paid": 2560.0,
+            "can_afford": true,
+            "below_buffer": false,
+            "requested_by": "accounting",
+            "status": "awaiting_human_approval"
+          }
+        ],
+        "purchase_orders": [
+          {
+            "vendor_id": 1,
+            "vendor_name": "Bulldog Print Co",
+            "sku": "CC-TEE-WHITE",
+            "size": "S",
+            "qty": 1,
+            "unit_cost": 8.0,
+            "total_cost": 8.0,
+            "lead_days": 5,
+            "can_ship": false,
+            "earliest_arrival": null,
+            "requested_by": "inventory",
+            "status": "draft_needs_human_review"
+          }
+        ],
+        "customer_drafts": [
+          {
+            "ticket_id": 101,
+            "to": "Tauhid Zaman",
+            "subject": "Bulldog tee in size S",
+            "body": "Hi Tauhid,\n\nWe don\u2019t have the white Bulldog tee in size S available today. We do have sizes M, L, and XL in stock if one of those could work for you. Let us know if you\u2019d like one of those instead; we\u2019ll follow up about size S when we have a reliable restock update.\n\nWe\u2019re keeping our paws crossed for a restock soon.\n\nThe Campus Customs team",
+            "drafted_by": "customer_service",
+            "status": "draft"
+          }
+        ],
+        "usage": {
+          "model_requests": 18,
+          "input_tokens": 44308,
+          "output_tokens": 2255
+        },
+        "started_at": "2026-10-31T15:17:59+00:00",
+        "finished_at": "2026-10-31T15:18:24+00:00"
+      },
+      "signed_by": "jessica horstmann",
+      "signed_at": "2026-10-31T15:19:41+00:00"
+    },
+    "103": {
+      "run_id": "6bd3e6a173",
+      "status": "done",
+      "started_at": "2026-10-31T15:18:24+00:00",
+      "finished_at": "2026-10-31T15:18:46+00:00",
+      "result": {
+        "run_id": "6bd3e6a173",
+        "ticket_id": 103,
+        "model": "gpt-6-luna",
+        "ok": true,
+        "decision": {
+          "ticket_id": 103,
+          "decision": "Approve the eligible 15% bulk discount: $49.30 per hoodie for 20 CC-HOOD-NAVY size M hoodies. Only 8 are available now; the remaining 12 depend on restocking, so no delivery timing should be promised.",
+          "reasoning": "Accounting verified the $58.00 list price and $22.00 unit cost; the discounted price remains above cost and is within bulk-discount authority. Inventory reported 8 available and 12 short, with a $264 restock dependent on paying overdue invoice 501 ($840, 3 days overdue). After the invoice payment and rent of $2,400 due in 2 days, checking would have $160; the restock would breach the $100 buffer. Customer Service prepared a draft explaining availability without promising timing.",
+          "final_status": "resolved",
+          "agents_used": [
+            "accounting",
+            "inventory",
+            "customer_service"
+          ],
+          "next_steps": [
+            "Shop owner: review and approve or decline the prepared $840 invoice payment; it is not paid yet.",
+            "Shop owner: review the $264 restock purchase-order draft. It is not affordable while also covering rent and preserving the $100 checking buffer.",
+            "Customer: the prepared message remains a draft; do not promise delivery timing for the 12-unit shortfall."
+          ]
+        },
+        "error": null,
+        "handoffs": [
+          {
+            "from_agent": "boss",
+            "to_agent": "accounting",
+            "depth": 1,
+            "task": "Work ticket #103: Yale AI Club requests a bulk discount on 20 CC-HOOD-NAVY size M hoodies. Check the price/margin and discount authority, stock or constraints as needed through your proper handoff, decide what can be approved vs needs owner approval, and provide a concise sourced report. Since a customer is waiting, include a customer-service draft via your own handoff.",
+            "report": {
+              "summary": "For ticket #103, I approve the eligible 15% bulk discount at $49.30 per hoodie. Only 8 of 20 size M hoodies are available now; the remaining 12 depend on an invoice payment and purchase-order approval, so no delivery date is promised. A customer-service draft was prepared.",
+              "findings": [
+                "Ticket #103 requests 20 CC-HOOD-NAVY size M hoodies for Yale AI Club (get_ticket).",
+                "List price is $58.00; unit cost is $22.00 (get_pricing).",
+                "At $49.30 per unit, the discount is 15.0%, margin is $27.30 per unit ($546.00 total), and the offer is not below cost (get_pricing). This is within bulk-discount authority. The $45 hoodie minimum is also respected.",
+                "Inventory reports 8 on hand and a shortfall of 12; Bulldog Print Co cannot ship while invoice 501 is open, and the 12-unit draft restock costs $264.00 (inventory report).",
+                "Invoice 501 is $840.00, 3 days overdue; no payment is recorded (get_invoice, get_payments). Payment was prepared, not paid: checking would fall from $3,400.00 to $2,560.00 (prepare_payment, get_cash_balance).",
+                "Lease 1 rent is $2,400.00 due in 2 days. After the prepared invoice payment and rent, $160.00 would remain; paying the additional $264.00 restock would leave less than the $100 checking buffer (get_lease, prepare_payment; restock cost from inventory report).",
+                "Customer service reports a draft offering the approved price and explaining 8 available now and 12 requiring restock, with no timing promise (customer_service report)."
+              ],
+              "recommendations": [
+                "Keep the approved discount at $49.30 per unit; do not represent all 20 as immediately available.",
+                "Consider the prepared invoice payment and any purchase order separately; the restock would breach the $100 buffer if rent and the invoice are also paid from checking."
+              ],
+              "needs_human": [
+                "Approve or decline the prepared $840.00 invoice payment (prepare_payment).",
+                "Review the $264.00 draft purchase order; it is not affordable while preserving rent and the $100 buffer with current checking cash (inventory report, get_lease, get_cash_balance)."
+              ]
+            },
+            "error": null
+          },
+          {
+            "from_agent": "accounting",
+            "to_agent": "inventory",
+            "depth": 2,
+            "task": "For ticket #103, check availability of CC-HOOD-NAVY size M, qty 20, and when any shortfall could arrive. Also identify any restock constraints/cost only if needed.",
+            "report": {
+              "summary": "CC-HOOD-NAVY size M has 8 of the 20 requested, leaving a shortfall of 12. A restock is needed, but the apparel vendor is blocked by an unpaid invoice, so there is no confirmed arrival date yet.",
+              "findings": [
+                "CC-HOOD-NAVY size M: 8 on hand of 20 requested; shortfall 12 (check_stock; request qty from get_ticket).",
+                "Bulldog Print Co is the matching apparel reprint vendor; lead time is 5 days and it cannot ship while invoice 501 is open (get_vendor_status).",
+                "Invoice 501 is open for $840.00 and was due 2026-08-28 (get_vendor_status).",
+                "A draft purchase order for the 12-unit shortfall totals $264.00; it is not an order and needs human review (draft_purchase_order).",
+                "If the blocking invoice is paid, the earliest arrival is 5 days after payment; no date can be promised before then (draft_purchase_order)."
+              ],
+              "recommendations": [
+                "Up to 8 units can be supplied now (check_stock).",
+                "Resolve invoice 501 through Accounting; the accounting handoff was unavailable because Accounting is already working on this chain.",
+                "Review the $264.00 draft purchase order if restocking is approved (draft_purchase_order)."
+              ],
+              "needs_human": [
+                "Approve payment of invoice 501 before the vendor can ship (get_vendor_status).",
+                "Review and approve the draft purchase order for $264.00 (draft_purchase_order)."
+              ]
+            },
+            "error": null
+          },
+          {
+            "from_agent": "accounting",
+            "to_agent": "customer_service",
+            "depth": 2,
+            "task": "Ticket #103 Yale AI Club requests 20 CC-HOOD-NAVY size M. Accounting approves up to 15% bulk discount: $49.30/unit (15% off list). Draft a customer reply that is honest: inventory confirmed 8 on hand; remaining 12 require restock. Vendor is blocked by open invoice 501; invoice payment is only prepared awaiting human approval, and restock requires PO approval, so do not promise timing or full immediate availability. No sending.",
+            "report": {
+              "summary": "Saved a draft for Yale AI Club offering the approved price and explaining that 8 navy hoodies are available now while 12 require restocking, with no timing promise.",
+              "findings": [
+                "Ticket #103 requests 20 size M hoodies (get_ticket).",
+                "Approved price of $49.30 per unit and inventory count of 8 on hand were provided in the request."
+              ],
+              "recommendations": [
+                "Offer the 8 available now and follow up with a restock update for the remaining 12, as written in the draft."
+              ],
+              "needs_human": []
+            },
+            "error": null
+          }
+        ],
+        "tools_used": [
+          "check_stock",
+          "draft_purchase_order",
+          "get_cash_balance",
+          "get_invoice",
+          "get_lease",
+          "get_payments",
+          "get_pricing",
+          "get_ticket",
+          "get_vendor_status",
+          "prepare_payment",
+          "update_ticket"
+        ],
+        "payment_requests": [
+          {
+            "kind": "invoice",
+            "ref_id": 501,
+            "payee": "Bulldog Print Co",
+            "description": "Rush reprint CC-TEE-WHITE S",
+            "amount": 840.0,
+            "due_date": "2026-08-28",
+            "overdue": true,
+            "account": "checking",
+            "cash_before": 3400.0,
+            "cash_after_if_paid": 2560.0,
+            "can_afford": true,
+            "below_buffer": false,
+            "requested_by": "accounting",
+            "status": "awaiting_human_approval"
+          }
+        ],
+        "purchase_orders": [
+          {
+            "vendor_id": 1,
+            "vendor_name": "Bulldog Print Co",
+            "sku": "CC-HOOD-NAVY",
+            "size": "M",
+            "qty": 12,
+            "unit_cost": 22.0,
+            "total_cost": 264.0,
+            "lead_days": 5,
+            "can_ship": false,
+            "earliest_arrival": null,
+            "requested_by": "inventory",
+            "status": "draft_needs_human_review"
+          }
+        ],
+        "customer_drafts": [
+          {
+            "ticket_id": 103,
+            "to": "Yale AI Club",
+            "subject": "Bulk navy hoodie order",
+            "body": "Hi Yale AI Club,\n\nWe can offer the navy hoodies at $49.30 each for your 20-piece order. We have 8 in stock now; the remaining 12 would need to be restocked, so the full order isn\u2019t available immediately. We can arrange the 8 now and follow up with a restock update for the remaining 12\u2014would you like to proceed that way?\n\nWe\u2019re hoodie-ing our best to get the rest of your order to you. \ud83e\udde5\n\nThe Campus Customs team",
+            "drafted_by": "customer_service",
+            "status": "draft"
+          }
+        ],
+        "usage": {
+          "model_requests": 19,
+          "input_tokens": 48974,
+          "output_tokens": 2767
+        },
+        "started_at": "2026-10-31T15:18:24+00:00",
+        "finished_at": "2026-10-31T15:18:46+00:00"
+      },
+      "signed_by": "jessica horstmann",
+      "signed_at": "2026-10-31T15:19:50+00:00"
+    }
+  },
+  "approvals": [
+    {
+      "id": "pay-rent-1",
+      "type": "payment",
+      "ticket_ids": [
+        102,
+        101
+      ],
+      "run_id": "51f84357f8",
+      "status": "paid",
+      "title": "Pay rent #1 \u2014 $2,400.00 to Elm City Properties",
+      "amount": 2400.0,
+      "pay_args": {
+        "kind": "rent",
+        "ref_id": 1,
+        "account": "checking"
+      },
+      "item": {
+        "kind": "rent",
+        "ref_id": 1,
+        "payee": "Elm City Properties",
+        "description": "Rent for Chapel Street shop",
+        "amount": 2400.0,
+        "due_date": "2026-09-02",
+        "overdue": false,
+        "account": "checking",
+        "cash_before": 3400.0,
+        "cash_after_if_paid": 1000.0,
+        "can_afford": true,
+        "below_buffer": false,
+        "requested_by": "accounting",
+        "status": "awaiting_human_approval"
+      },
+      "created_at": "2026-10-31T15:17:59+00:00",
+      "decided_by": "jessica horstmann",
+      "decided_at": "2026-10-31T15:19:34+00:00",
+      "outcome": {
+        "paid": true,
+        "payment_id": 1,
+        "kind": "rent",
+        "ref_id": 1,
+        "payee": "Elm City Properties",
+        "amount": 2400.0,
+        "account": "checking",
+        "paid_at": "2026-08-31",
+        "approved_by": "jessica horstmann",
+        "cash_after": 1000.0,
+        "lease_next_due": "2026-10-02"
+      },
+      "note": null
+    },
+    {
+      "id": "pay-invoice-501",
+      "type": "payment",
+      "ticket_ids": [
+        101,
+        103
+      ],
+      "run_id": "bf00827117",
+      "status": "paid",
+      "title": "Pay invoice #501 \u2014 $840.00 to Bulldog Print Co",
+      "amount": 840.0,
+      "pay_args": {
+        "kind": "invoice",
+        "ref_id": 501,
+        "account": "checking"
+      },
+      "item": {
+        "kind": "invoice",
+        "ref_id": 501,
+        "payee": "Bulldog Print Co",
+        "description": "Rush reprint CC-TEE-WHITE S",
+        "amount": 840.0,
+        "due_date": "2026-08-28",
+        "overdue": true,
+        "account": "checking",
+        "cash_before": 3400.0,
+        "cash_after_if_paid": 2560.0,
+        "can_afford": true,
+        "below_buffer": false,
+        "requested_by": "accounting",
+        "status": "awaiting_human_approval"
+      },
+      "created_at": "2026-10-31T15:18:24+00:00",
+      "decided_by": "jessica horstmann",
+      "decided_at": "2026-10-31T15:19:35+00:00",
+      "outcome": {
+        "paid": true,
+        "payment_id": 2,
+        "kind": "invoice",
+        "ref_id": 501,
+        "payee": "Bulldog Print Co",
+        "amount": 840.0,
+        "account": "checking",
+        "paid_at": "2026-08-31",
+        "approved_by": "jessica horstmann",
+        "cash_after": 160.0,
+        "invoice_status": "paid"
+      },
+      "note": null
+    },
+    {
+      "id": "po-1-CC-TEE-WHITE-S",
+      "type": "purchase_order",
+      "ticket_ids": [
+        101
+      ],
+      "run_id": "bf00827117",
+      "status": "paid",
+      "title": "Purchase order \u2014 1 \u00d7 CC-TEE-WHITE S from Bulldog Print Co ($8.00)",
+      "amount": 8.0,
+      "pay_args": {
+        "kind": "purchase_order",
+        "ref_id": 1,
+        "sku": "CC-TEE-WHITE",
+        "size": "S",
+        "qty": 1
+      },
+      "item": {
+        "vendor_id": 1,
+        "vendor_name": "Bulldog Print Co",
+        "sku": "CC-TEE-WHITE",
+        "size": "S",
+        "qty": 1,
+        "unit_cost": 8.0,
+        "total_cost": 8.0,
+        "lead_days": 5,
+        "can_ship": false,
+        "earliest_arrival": null,
+        "requested_by": "inventory",
+        "status": "draft_needs_human_review"
+      },
+      "created_at": "2026-10-31T15:18:24+00:00",
+      "decided_by": "jessica horstmann",
+      "decided_at": "2026-10-31T15:19:38+00:00",
+      "outcome": {
+        "paid": true,
+        "payment_id": 3,
+        "kind": "purchase_order",
+        "ref_id": 1,
+        "payee": "Bulldog Print Co",
+        "amount": 8.0,
+        "account": "checking",
+        "paid_at": "2026-08-31",
+        "approved_by": "jessica horstmann",
+        "cash_after": 152.0,
+        "purchase_order": {
+          "sku": "CC-TEE-WHITE",
+          "size": "S",
+          "qty": 1,
+          "unit_cost": 8.0,
+          "expected_arrival": "2026-09-05"
+        }
+      },
+      "note": null
+    },
+    {
+      "id": "po-1-CC-HOOD-NAVY-M",
+      "type": "purchase_order",
+      "ticket_ids": [
+        103
+      ],
+      "run_id": "6bd3e6a173",
+      "status": "rejected",
+      "title": "Purchase order \u2014 12 \u00d7 CC-HOOD-NAVY M from Bulldog Print Co ($264.00)",
+      "amount": 264.0,
+      "pay_args": {
+        "kind": "purchase_order",
+        "ref_id": 1,
+        "sku": "CC-HOOD-NAVY",
+        "size": "M",
+        "qty": 12
+      },
+      "item": {
+        "vendor_id": 1,
+        "vendor_name": "Bulldog Print Co",
+        "sku": "CC-HOOD-NAVY",
+        "size": "M",
+        "qty": 12,
+        "unit_cost": 22.0,
+        "total_cost": 264.0,
+        "lead_days": 5,
+        "can_ship": false,
+        "earliest_arrival": null,
+        "requested_by": "inventory",
+        "status": "draft_needs_human_review"
+      },
+      "created_at": "2026-10-31T15:18:46+00:00",
+      "decided_by": "jessica horstmann",
+      "decided_at": "2026-10-31T15:19:45+00:00",
+      "outcome": null,
+      "note": "Voided at the desk"
+    }
+  ],
+  "drafts": [
+    {
+      "ticket_id": 101,
+      "to": "Tauhid Zaman",
+      "subject": "Bulldog tee in size S",
+      "body": "Hi Tauhid,\n\nWe don\u2019t have the white Bulldog tee in size S available today. We do have sizes M, L, and XL in stock if one of those could work for you. Let us know if you\u2019d like one of those instead; we\u2019ll follow up about size S when we have a reliable restock update.\n\nWe\u2019re keeping our paws crossed for a restock soon.\n\nThe Campus Customs team",
+      "drafted_by": "customer_service",
+      "status": "approved",
+      "id": "draft-101-1",
+      "run_id": "bf00827117",
+      "approved_by": "jessica horstmann",
+      "approved_at": "2026-10-31T15:19:41+00:00",
+      "sent": false
+    },
+    {
+      "ticket_id": 103,
+      "to": "Yale AI Club",
+      "subject": "Bulk navy hoodie order",
+      "body": "Hi Yale AI Club,\n\nWe can offer the navy hoodies at $49.30 each for your 20-piece order. We have 8 in stock now; the remaining 12 would need to be restocked, so the full order isn\u2019t available immediately. We can arrange the 8 now and follow up with a restock update for the remaining 12\u2014would you like to proceed that way?\n\nWe\u2019re hoodie-ing our best to get the rest of your order to you. \ud83e\udde5\n\nThe Campus Customs team",
+      "drafted_by": "customer_service",
+      "status": "approved",
+      "id": "draft-103-1",
+      "run_id": "6bd3e6a173",
+      "approved_by": "jessica horstmann",
+      "approved_at": "2026-10-31T15:19:50+00:00",
+      "sent": false
+    }
+  ],
+  "triage": {
+    "run_id": "ebf0b016a7",
+    "order": [
+      {
+        "rank": 1,
+        "ticket_id": 102,
+        "reason": "Rent is $2,400 due 2026-09-02, in 2 days (lease lookup); prioritize keeping the shop space."
+      },
+      {
+        "rank": 2,
+        "ticket_id": 101,
+        "reason": "Linked invoice 501 is $840, due 2026-08-28 and 3 days overdue (invoice lookup); Bulldog Print Co will not ship while its bill is open."
+      },
+      {
+        "rank": 3,
+        "ticket_id": 103,
+        "reason": "The request is for 20 hoodies and has no linked invoice or dated payment obligation; consider it only after rent and the overdue bill."
+      }
+    ],
+    "summary": "Cash is $3,400 (cash balance): after $2,400 rent and the $840 overdue invoice, $160 remains\u2014$60 above the $100 checking buffer.",
+    "usage": {
+      "model_requests": 3,
+      "input_tokens": 6251,
+      "output_tokens": 630,
+      "total_tokens": 6881
+    },
+    "model": "gpt-6-luna",
+    "at": "2026-10-31T15:17:56+00:00"
+  },
+  "manual_order": null
+}

@@ -1,0 +1,424 @@
+{
+  "run": {
+    "model": "gpt-6-luna",
+    "database": "data/campus_customs_new.db (reset from data/campus_customs.db before the run)",
+    "audit_seq_range": [
+      2440,
+      2638
+    ],
+    "order": [
+      102,
+      101,
+      103
+    ],
+    "how": "Boss triage, then the Boss ran every ticket in that order (POST /api/run-board); the human then did the numbered steps on the cards (sign or void each check, approve each draft)",
+    "boss_triage": {
+      "run_id": "ebf0b016a7",
+      "order": [
+        {
+          "rank": 1,
+          "ticket_id": 102,
+          "reason": "Rent is $2,400 due 2026-09-02, in 2 days (lease lookup); prioritize keeping the shop space."
+        },
+        {
+          "rank": 2,
+          "ticket_id": 101,
+          "reason": "Linked invoice 501 is $840, due 2026-08-28 and 3 days overdue (invoice lookup); Bulldog Print Co will not ship while its bill is open."
+        },
+        {
+          "rank": 3,
+          "ticket_id": 103,
+          "reason": "The request is for 20 hoodies and has no linked invoice or dated payment obligation; consider it only after rent and the overdue bill."
+        }
+      ],
+      "summary": "Cash is $3,400 (cash balance): after $2,400 rent and the $840 overdue invoice, $160 remains—$60 above the $100 checking buffer.",
+      "tokens": 6881
+    },
+    "starting_checking": 3400.0,
+    "payments": [
+      {
+        "payment_id": 1,
+        "kind": "rent",
+        "ref_id": 1,
+        "amount": 2400.0,
+        "account": "checking",
+        "paid_at": "2026-08-31",
+        "approved_by": "jessica horstmann"
+      },
+      {
+        "payment_id": 2,
+        "kind": "invoice",
+        "ref_id": 501,
+        "amount": 840.0,
+        "account": "checking",
+        "paid_at": "2026-08-31",
+        "approved_by": "jessica horstmann"
+      },
+      {
+        "payment_id": 3,
+        "kind": "purchase_order",
+        "ref_id": 1,
+        "amount": 8.0,
+        "account": "checking",
+        "paid_at": "2026-08-31",
+        "approved_by": "jessica horstmann"
+      }
+    ],
+    "total_paid": 3248.0,
+    "ending_checking": 152.0,
+    "ending_matches_cash_accounts": true,
+    "total_tokens": 128925
+  },
+  "tickets": [
+    {
+      "ticket_id": 101,
+      "type": "customer_order",
+      "requester": "Tauhid Zaman",
+      "subject": "Bulldog tee",
+      "final_status": "resolved",
+      "desk_state": "signed",
+      "signed_by": "jessica horstmann",
+      "outcome": "Size S tee is out of stock. Invoice #501 ($840, 3 days overdue) blocked the apparel vendor; it was paid on human approval and a 1-tee restock ($8) was ordered (arrives 2026-09-05). Customer draft to Tauhid offers M/L/XL now or waiting for S. Accounting also prepared the rent check (rent first); the board showed it once, shared with #102.",
+      "run_id": "bf00827117",
+      "audit_seq_range": [
+        2498,
+        2560
+      ],
+      "agents": {
+        "boss": {
+          "worked": true,
+          "contribution": "Size S is unavailable today. Keep the order pending restock: the $8 purchase order is drafted, but Bulldog Print Co cannot ship until invoice #501 is paid. A customer message offering available sizes M, L, and XL has been drafted without promising a restock date.",
+          "tools": {
+            "get_ticket": 1,
+            "update_ticket": 1
+          }
+        },
+        "inventory": {
+          "worked": true,
+          "contribution": "Ticket #101 requests 1 CC-TEE-WHITE size S. There are none on hand, so the requested size cannot be handed over today. A restock draft is prepared, but Bulldog Print Co is blocked by unpaid invoice #501; arrival timing depends on when that invoice is paid.",
+          "tools": {
+            "get_ticket": 1,
+            "check_stock": 1,
+            "get_vendor_status": 1,
+            "draft_purchase_order": 1
+          }
+        },
+        "accounting": {
+          "worked": true,
+          "contribution": "Prepared the rent and invoice payments for human approval, in the required priority order. Neither payment has been made. If both are paid, checking will have $160 left, above the $100 buffer.",
+          "tools": {
+            "get_ticket": 1,
+            "get_lease": 1,
+            "get_invoice": 1,
+            "get_cash_balance": 1,
+            "get_payments": 1,
+            "prepare_payment": 2
+          }
+        },
+        "facilities": {
+          "worked": false,
+          "contribution": null,
+          "tools": {}
+        },
+        "customer_service": {
+          "worked": true,
+          "contribution": "Saved a draft for Tauhid Zaman explaining that size S is unavailable today, offering in-stock sizes M, L, and XL, and saying we’ll follow up when we have a reliable restock update.",
+          "tools": {
+            "get_ticket": 1,
+            "save_customer_draft": 1
+          }
+        }
+      },
+      "handoffs": [
+        {
+          "from": "boss",
+          "to": "inventory"
+        },
+        {
+          "from": "inventory",
+          "to": "accounting"
+        },
+        {
+          "from": "inventory",
+          "to": "customer_service"
+        }
+      ],
+      "matched_plan": true,
+      "human_approvals": [
+        {
+          "approval_id": "pay-rent-1",
+          "decision": "paid",
+          "by": "jessica horstmann",
+          "amount": 2400.0,
+          "cash_after": 1000.0,
+          "message": null,
+          "audit_seq": 2631,
+          "shared_with": [
+            102
+          ]
+        },
+        {
+          "approval_id": "pay-invoice-501",
+          "decision": "paid",
+          "by": "jessica horstmann",
+          "amount": 840.0,
+          "cash_after": 160.0,
+          "message": null,
+          "audit_seq": 2632,
+          "shared_with": [
+            103
+          ]
+        },
+        {
+          "approval_id": "po-1-CC-TEE-WHITE-S",
+          "decision": "paid",
+          "by": "jessica horstmann",
+          "amount": 8.0,
+          "cash_after": 152.0,
+          "message": null,
+          "audit_seq": 2633,
+          "shared_with": []
+        }
+      ],
+      "customer_drafts": [
+        {
+          "to": "Tauhid Zaman",
+          "subject": "Bulldog tee in size S",
+          "body": "Hi Tauhid,\n\nWe don’t have the white Bulldog tee in size S available today. We do have sizes M, L, and XL in stock if one of those could work for you. Let us know if you’d like one of those instead; we’ll follow up about size S when we have a reliable restock update.\n\nWe’re keeping our paws crossed for a restock soon.\n\nThe Campus Customs team",
+          "approved_by": "jessica horstmann",
+          "edited": false,
+          "sent": false
+        }
+      ],
+      "usage": {
+        "model_requests": 18,
+        "input_tokens": 44308,
+        "output_tokens": 2255,
+        "total_tokens": 46563
+      }
+    },
+    {
+      "ticket_id": 102,
+      "type": "rent_notice",
+      "requester": "Elm City Properties",
+      "subject": "Rent due",
+      "final_status": "resolved",
+      "desk_state": "signed",
+      "signed_by": "jessica horstmann",
+      "outcome": "Rent notice verified against lease #1 (landlord, $2,400, due 2026-09-02, not already paid). Rent paid on human approval (step 1 on the cards); lease next due moved to 2026-10-02.",
+      "run_id": "51f84357f8",
+      "audit_seq_range": [
+        2456,
+        2497
+      ],
+      "agents": {
+        "boss": {
+          "worked": true,
+          "contribution": "Prepare the $2,400 rent payment for human approval.",
+          "tools": {
+            "get_ticket": 1,
+            "update_ticket": 1
+          }
+        },
+        "inventory": {
+          "worked": false,
+          "contribution": null,
+          "tools": {}
+        },
+        "accounting": {
+          "worked": true,
+          "contribution": "Prepared the rent payment for ticket #102; it is awaiting human approval. The payment is affordable and leaves checking above the required buffer.",
+          "tools": {
+            "get_ticket": 1,
+            "get_lease": 1,
+            "get_payments": 1,
+            "get_cash_balance": 1,
+            "prepare_payment": 1
+          }
+        },
+        "facilities": {
+          "worked": true,
+          "contribution": "Ticket #102 checks out against lease 1. Accounting prepared the rent payment for human approval; the work is complete pending approval.",
+          "tools": {
+            "get_ticket": 1,
+            "get_lease": 1,
+            "get_payments": 1
+          }
+        },
+        "customer_service": {
+          "worked": false,
+          "contribution": null,
+          "tools": {}
+        }
+      },
+      "handoffs": [
+        {
+          "from": "boss",
+          "to": "facilities"
+        },
+        {
+          "from": "facilities",
+          "to": "accounting"
+        }
+      ],
+      "matched_plan": true,
+      "human_approvals": [
+        {
+          "approval_id": "pay-rent-1",
+          "decision": "paid",
+          "by": "jessica horstmann",
+          "amount": 2400.0,
+          "cash_after": 1000.0,
+          "message": null,
+          "audit_seq": 2631,
+          "shared_with": [
+            101
+          ]
+        }
+      ],
+      "customer_drafts": [],
+      "usage": {
+        "model_requests": 10,
+        "input_tokens": 22654,
+        "output_tokens": 1086,
+        "total_tokens": 23740
+      }
+    },
+    {
+      "ticket_id": 103,
+      "type": "price_override",
+      "requester": "Yale AI Club",
+      "subject": "Bulk hoodie discount",
+      "final_status": "resolved",
+      "desk_state": "signed",
+      "signed_by": "jessica horstmann",
+      "outcome": "15% bulk price approved at $49.30/hoodie (above the $45 floor). 8 of 20 in stock; Inventory drafted the 12-hoodie restock ($264). Accounting flagged that it would breach the $100 buffer after rent and #501; the pay tool refused it (only $152 left after rent, #501 and the tee) and the human voided it. Customer draft to the Yale AI Club quotes $49.30 and offers the 8 now, the rest after a restock, with no date promised.",
+      "run_id": "6bd3e6a173",
+      "audit_seq_range": [
+        2561,
+        2629
+      ],
+      "agents": {
+        "boss": {
+          "worked": true,
+          "contribution": "Approve the eligible 15% bulk discount: $49.30 per hoodie for 20 CC-HOOD-NAVY size M hoodies. Only 8 are available now; the remaining 12 depend on restocking, so no delivery timing should be promised.",
+          "tools": {
+            "get_ticket": 1,
+            "update_ticket": 1
+          }
+        },
+        "inventory": {
+          "worked": true,
+          "contribution": "CC-HOOD-NAVY size M has 8 of the 20 requested, leaving a shortfall of 12. A restock is needed, but the apparel vendor is blocked by an unpaid invoice, so there is no confirmed arrival date yet.",
+          "tools": {
+            "get_ticket": 1,
+            "check_stock": 1,
+            "get_vendor_status": 1,
+            "draft_purchase_order": 1
+          }
+        },
+        "accounting": {
+          "worked": true,
+          "contribution": "For ticket #103, I approve the eligible 15% bulk discount at $49.30 per hoodie. Only 8 of 20 size M hoodies are available now; the remaining 12 depend on an invoice payment and purchase-order approval, so no delivery date is promised. A customer-service draft was prepared.",
+          "tools": {
+            "get_ticket": 1,
+            "get_pricing": 3,
+            "get_lease": 1,
+            "get_cash_balance": 1,
+            "get_invoice": 1,
+            "get_payments": 1,
+            "prepare_payment": 1
+          }
+        },
+        "facilities": {
+          "worked": false,
+          "contribution": null,
+          "tools": {}
+        },
+        "customer_service": {
+          "worked": true,
+          "contribution": "Saved a draft for Yale AI Club offering the approved price and explaining that 8 navy hoodies are available now while 12 require restocking, with no timing promise.",
+          "tools": {
+            "get_ticket": 1,
+            "save_customer_draft": 1
+          }
+        }
+      },
+      "handoffs": [
+        {
+          "from": "boss",
+          "to": "accounting"
+        },
+        {
+          "from": "accounting",
+          "to": "inventory"
+        },
+        {
+          "from": "accounting",
+          "to": "customer_service"
+        }
+      ],
+      "matched_plan": true,
+      "human_approvals": [
+        {
+          "approval_id": "pay-invoice-501",
+          "decision": "paid",
+          "by": "jessica horstmann",
+          "amount": 840.0,
+          "cash_after": 160.0,
+          "message": null,
+          "audit_seq": 2632,
+          "shared_with": [
+            101
+          ]
+        },
+        {
+          "approval_id": "po-1-CC-HOOD-NAVY-M",
+          "decision": "refused",
+          "by": "jessica horstmann",
+          "amount": 264.0,
+          "cash_after": null,
+          "message": "Refused: checking has $152.00, payment is $264.00. No negative balances.",
+          "audit_seq": 2635,
+          "shared_with": []
+        },
+        {
+          "approval_id": "po-1-CC-HOOD-NAVY-M",
+          "decision": "refused",
+          "by": "jessica horstmann",
+          "amount": 264.0,
+          "cash_after": null,
+          "message": "Refused: checking has $152.00, payment is $264.00. No negative balances.",
+          "audit_seq": 2636,
+          "shared_with": []
+        },
+        {
+          "approval_id": "po-1-CC-HOOD-NAVY-M",
+          "decision": "rejected",
+          "by": "jessica horstmann",
+          "amount": null,
+          "cash_after": null,
+          "message": "Voided at the desk",
+          "audit_seq": 2637,
+          "shared_with": []
+        }
+      ],
+      "customer_drafts": [
+        {
+          "to": "Yale AI Club",
+          "subject": "Bulk navy hoodie order",
+          "body": "Hi Yale AI Club,\n\nWe can offer the navy hoodies at $49.30 each for your 20-piece order. We have 8 in stock now; the remaining 12 would need to be restocked, so the full order isn’t available immediately. We can arrange the 8 now and follow up with a restock update for the remaining 12—would you like to proceed that way?\n\nWe’re hoodie-ing our best to get the rest of your order to you. 🧥\n\nThe Campus Customs team",
+          "approved_by": "jessica horstmann",
+          "edited": false,
+          "sent": false
+        }
+      ],
+      "usage": {
+        "model_requests": 19,
+        "input_tokens": 48974,
+        "output_tokens": 2767,
+        "total_tokens": 51741
+      }
+    }
+  ]
+}

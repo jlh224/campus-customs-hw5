@@ -1,0 +1,389 @@
+{
+  "server": "campus-customs (stdio, registered in .mcp.json)",
+  "database": "data/campus_customs_new.db",
+  "called_via": "live MCP connection from the vibe coder (Claude Code)",
+  "user_message": "Okay, can you check how many classic bulldog Tees we have in size small? And can you see if Bulldog Print Co. (vendor one) can ship right now? Show me any lead time, any open invoices. And finally, look up lease one. Let me know how much is the rent and when is it due.",
+  "tests": [
+    {
+      "prompt": "Okay, can you check how many classic bulldog Tees we have in size small?",
+      "tool": "check_stock",
+      "arguments": {
+        "sku": "CC-TEE-WHITE",
+        "size": "S"
+      },
+      "output": {
+        "found": true,
+        "sku": "CC-TEE-WHITE",
+        "name": "Classic Bulldog Tee",
+        "sizes": [
+          {
+            "size": "S",
+            "qty": 0,
+            "location": "Aisle B",
+            "in_stock": false
+          }
+        ],
+        "total_qty": 0
+      },
+      "db_check": {
+        "source": "inventory row (sku='CC-TEE-WHITE', size='S')",
+        "query": "SELECT sku,name,size,qty,location FROM inventory WHERE sku='CC-TEE-WHITE' AND size='S'",
+        "fields": {
+          "sku": {
+            "tool": "CC-TEE-WHITE",
+            "db": "CC-TEE-WHITE",
+            "match": true
+          },
+          "name": {
+            "tool": "Classic Bulldog Tee",
+            "db": "Classic Bulldog Tee",
+            "match": true
+          },
+          "size": {
+            "tool": "S",
+            "db": "S",
+            "match": true
+          },
+          "qty": {
+            "tool": 0,
+            "db": 0,
+            "match": true
+          },
+          "location": {
+            "tool": "Aisle B",
+            "db": "Aisle B",
+            "match": true
+          },
+          "in_stock": {
+            "tool": false,
+            "db": false,
+            "match": true
+          }
+        },
+        "pass": true
+      }
+    },
+    {
+      "prompt": "And can you see if Bulldog Print Co. (vendor one) can ship right now? Show me any lead time, any open invoices.",
+      "tool": "get_vendor_status",
+      "arguments": {
+        "vendor_id": 1
+      },
+      "output": {
+        "found": true,
+        "date_today": "2026-08-31",
+        "vendors": [
+          {
+            "vendor_id": 1,
+            "name": "Bulldog Print Co",
+            "specialty": "apparel reprint",
+            "lead_days": 5,
+            "open_invoices": [
+              {
+                "invoice_id": 501,
+                "amount": 840,
+                "due_date": "2026-08-28",
+                "status": "open",
+                "description": "Rush reprint CC-TEE-WHITE S",
+                "days_overdue": 3,
+                "overdue": true
+              }
+            ],
+            "open_balance": 840,
+            "can_ship": false
+          }
+        ]
+      },
+      "db_check": {
+        "source": "vendors row id=1; invoices row id=501 (vendor_id=1, status='open'); desk.date_today",
+        "query": "SELECT * FROM vendors WHERE id=1; SELECT * FROM invoices WHERE vendor_id=1 AND status='open'; SELECT date_today FROM desk",
+        "fields": {
+          "date_today": {
+            "tool": "2026-08-31",
+            "db": "2026-08-31",
+            "match": true
+          },
+          "vendor_id": {
+            "tool": 1,
+            "db": 1,
+            "match": true
+          },
+          "name": {
+            "tool": "Bulldog Print Co",
+            "db": "Bulldog Print Co",
+            "match": true
+          },
+          "specialty": {
+            "tool": "apparel reprint",
+            "db": "apparel reprint",
+            "match": true
+          },
+          "lead_days": {
+            "tool": 5,
+            "db": 5,
+            "match": true
+          },
+          "open_invoice_count": {
+            "tool": 1,
+            "db": 1,
+            "match": true
+          },
+          "invoice_id": {
+            "tool": 501,
+            "db": 501,
+            "match": true
+          },
+          "amount": {
+            "tool": 840,
+            "db": 840.0,
+            "match": true
+          },
+          "due_date": {
+            "tool": "2026-08-28",
+            "db": "2026-08-28",
+            "match": true
+          },
+          "status": {
+            "tool": "open",
+            "db": "open",
+            "match": true
+          },
+          "description": {
+            "tool": "Rush reprint CC-TEE-WHITE S",
+            "db": "Rush reprint CC-TEE-WHITE S",
+            "match": true
+          },
+          "days_overdue": {
+            "tool": 3,
+            "db": 3,
+            "match": true
+          },
+          "open_balance": {
+            "tool": 840,
+            "db": 840.0,
+            "match": true
+          },
+          "can_ship": {
+            "tool": false,
+            "db": false,
+            "match": true
+          }
+        },
+        "pass": true
+      }
+    },
+    {
+      "prompt": "And finally, look up lease one. Let me know how much is the rent and when is it due.",
+      "tool": "get_lease",
+      "arguments": {
+        "lease_id": 1
+      },
+      "output": {
+        "found": true,
+        "lease_id": 1,
+        "space_name": "Chapel Street shop",
+        "landlord": "Elm City Properties",
+        "monthly_rent": 2400,
+        "next_due": "2026-09-02",
+        "date_today": "2026-08-31",
+        "days_until_due": 2,
+        "overdue": false,
+        "notes": null
+      },
+      "db_check": {
+        "source": "leases row id=1; desk.date_today",
+        "query": "SELECT * FROM leases WHERE id=1; SELECT date_today FROM desk",
+        "fields": {
+          "lease_id": {
+            "tool": 1,
+            "db": 1,
+            "match": true
+          },
+          "space_name": {
+            "tool": "Chapel Street shop",
+            "db": "Chapel Street shop",
+            "match": true
+          },
+          "landlord": {
+            "tool": "Elm City Properties",
+            "db": "Elm City Properties",
+            "match": true
+          },
+          "monthly_rent": {
+            "tool": 2400,
+            "db": 2400.0,
+            "match": true
+          },
+          "next_due": {
+            "tool": "2026-09-02",
+            "db": "2026-09-02",
+            "match": true
+          },
+          "notes": {
+            "tool": null,
+            "db": null,
+            "match": true
+          },
+          "date_today": {
+            "tool": "2026-08-31",
+            "db": "2026-08-31",
+            "match": true
+          },
+          "days_until_due": {
+            "tool": 2,
+            "db": 2,
+            "match": true
+          },
+          "overdue": {
+            "tool": false,
+            "db": false,
+            "match": true
+          }
+        },
+        "pass": true
+      }
+    }
+  ],
+  "all_db_checks_pass": true,
+  "post_run_recheck": {
+    "why": "The tests above were run in Problem 4 on the freshly copied database. Problem 9's human-approved payments then changed the working copy (invoice #501 paid; rent paid, so lease #1's next_due moved a month ahead). So that this file matches data/campus_customs_new.db as submitted, the same three tools were called again, live over the same MCP connection from the vibe coder, after the Problem 9 run.",
+    "called_at": "2026-10-31, after Problem 9 (audit #2638)",
+    "tests": [
+      {
+        "prompt": "Check the classic Bulldog tee in size small again.",
+        "tool": "check_stock",
+        "arguments": {
+          "sku": "CC-TEE-WHITE",
+          "size": "S"
+        },
+        "output": {
+          "found": true,
+          "sku": "CC-TEE-WHITE",
+          "name": "Classic Bulldog Tee",
+          "sizes": [
+            {
+              "size": "S",
+              "qty": 0,
+              "location": "Aisle B",
+              "in_stock": false
+            }
+          ],
+          "total_qty": 0
+        },
+        "db_check": {
+          "query": "SELECT * FROM inventory WHERE sku='CC-TEE-WHITE' AND size='S'",
+          "fields": {
+            "qty": {
+              "tool": 0,
+              "db": 0,
+              "match": true
+            },
+            "location": {
+              "tool": "Aisle B",
+              "db": "Aisle B",
+              "match": true
+            },
+            "name": {
+              "tool": "Classic Bulldog Tee",
+              "db": "Classic Bulldog Tee",
+              "match": true
+            }
+          },
+          "pass": true
+        },
+        "changed_since_problem_4": "No: still 0 (the approved 1-tee restock arrives after the vendor's 5-day lead time)."
+      },
+      {
+        "prompt": "Can Bulldog Print Co (vendor 1) ship now?",
+        "tool": "get_vendor_status",
+        "arguments": {
+          "vendor_id": 1
+        },
+        "output": {
+          "found": true,
+          "date_today": "2026-08-31",
+          "vendors": [
+            {
+              "vendor_id": 1,
+              "name": "Bulldog Print Co",
+              "specialty": "apparel reprint",
+              "lead_days": 5,
+              "open_invoices": [],
+              "open_balance": 0,
+              "can_ship": true
+            }
+          ]
+        },
+        "db_check": {
+          "query": "SELECT * FROM vendors WHERE id=1; SELECT * FROM invoices WHERE vendor_id=1",
+          "fields": {
+            "lead_days": {
+              "tool": 5,
+              "db": 5,
+              "match": true
+            },
+            "open_invoice_count": {
+              "tool": 0,
+              "db": 0,
+              "match": true
+            },
+            "can_ship": {
+              "tool": true,
+              "db": true,
+              "match": true
+            },
+            "invoice_501_status": {
+              "tool": "paid",
+              "db": "paid",
+              "match": true
+            }
+          },
+          "pass": true
+        },
+        "changed_since_problem_4": "Yes: invoice #501 was paid on human approval (Problem 9, audit #2632), so there are no open invoices and can_ship is now true."
+      },
+      {
+        "prompt": "Look up lease 1 again: rent and next due date.",
+        "tool": "get_lease",
+        "arguments": {
+          "lease_id": 1
+        },
+        "output": {
+          "found": true,
+          "lease_id": 1,
+          "space_name": "Chapel Street shop",
+          "landlord": "Elm City Properties",
+          "monthly_rent": 2400,
+          "next_due": "2026-10-02",
+          "date_today": "2026-08-31",
+          "days_until_due": 32,
+          "overdue": false,
+          "notes": null
+        },
+        "db_check": {
+          "query": "SELECT * FROM leases WHERE id=1",
+          "fields": {
+            "monthly_rent": {
+              "tool": 2400,
+              "db": 2400.0,
+              "match": true
+            },
+            "next_due": {
+              "tool": "2026-10-02",
+              "db": "2026-10-02",
+              "match": true
+            },
+            "landlord": {
+              "tool": "Elm City Properties",
+              "db": "Elm City Properties",
+              "match": true
+            }
+          },
+          "pass": true
+        },
+        "changed_since_problem_4": "Yes: rent was paid on human approval (Problem 9, audit #2631), so next_due moved from 2026-09-02 to 2026-10-02."
+      }
+    ],
+    "all_db_checks_pass": true
+  }
+}
