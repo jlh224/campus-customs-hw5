@@ -170,3 +170,15 @@ Then I answered the prompt questions one at a time, in my own words:
 
 *What was lacking:* My first prompt mixed up two of the questions: money coming in, utility bills and wrong-product complaints all need tools or tables we don't have (no sales, orders or shipments tables, and `pay` only knows invoices, rent and purchase orders), so they became the three problems the team could *not* solve, and the AI suggested three it *could* solve with today's tools (a duplicate or fake rent notice, a bigger-discount request, and when the AI Club's other 12 hoodies become affordable). My note that "Accounting made sure we didn't go under $100" also needed checking: going back to the audit trail showed Accounting did flag that the $264 restock would breach the buffer, but the money was actually stopped by code (the dashboard's red flag and the pay tool's no-negative refusal) and my void. While writing it, the AI first read only Accounting's one-line summary and wrongly said the buffer warning was missing in the official run; the full findings showed it was there, so we corrected the reflection and restored that line to the #103 outcome. The audit also showed the draft leak was systematic (6 runs with "check_stock", 7 with the SKU) and that several #103 reruns were identical to the token, which is why only changing the rules fixed it.
 
+---
+
+## Problem 11: Submit to GitHub
+
+**Prompt (my words):**
+> Problem 11, submit to GitHub. Now push the code to a public GitHub repository so graders can clone it, submit the repo URL to Canvas, and also put it in output/github_url.txt. Don't push the real .env to the GitHub repo. We should definitely include both database files under data/, the original and the working copy, so graders can run the app easily. The expected layout is attached. The README should explain: copy the original DB to the working copy when you need a clean run, start the MCP server, start the FastAPI backend, start the React board, and reset the DB before a full 3-ticket run. Does that all make sense?
+
+**Follow-up:**
+> Before you submit anything, you should look at the whole assignment and make sure we'd get 100% on it. And if we wouldn't, we need to fix it. You can go ahead and fix it.
+
+*What was lacking:* My first prompt went straight to pushing, but a full check of Problems 1–11 found gaps that would have cost points: `mcp_smoke.json` no longer matched the working database after Problem 9's payments (invoice #501 paid, rent's next due date moved), so we re-ran the three tools live and added a `post_run_recheck`; four sections of this file were missing their "what was lacking" line (and Problem 4 wrongly said no follow-up was needed); and `.mcp.json` and the run steps pointed at my own computer's paths. We fixed those, scanned every file for the Portkey key (not present; `.env` is ignored), tested a fresh clone (the backend starts without a `.env` and shows all three tickets signed at $152), and then pushed to https://github.com/jlh224/campus-customs-hw5.
+
