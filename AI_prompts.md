@@ -168,6 +168,8 @@ Then I answered the prompt questions one at a time, in my own words:
 **Follow-up:**
 > We should be tying every answer to this particular app and the three tickets we ran, and use the ticket tabs and Cash tab on the same page as our evidence. Generic AI essays without Campus Customs details would score low.
 
+> OK, update Customer Service. The jokes are lame, but that is what I was going for, instead of "good tone."
+
 *What was lacking:* My first prompt mixed up two of the questions: money coming in, utility bills and wrong-product complaints all need tools or tables we don't have (no sales, orders or shipments tables, and `pay` only knows invoices, rent and purchase orders), so they became the three problems the team could *not* solve, and the AI suggested three it *could* solve with today's tools (a duplicate or fake rent notice, a bigger-discount request, and when the AI Club's other 12 hoodies become affordable). My note that "Accounting made sure we didn't go under $100" also needed checking: going back to the audit trail showed Accounting did flag that the $264 restock would breach the buffer, but the money was actually stopped by code (the dashboard's red flag and the pay tool's no-negative refusal) and my void. While writing it, the AI first read only Accounting's one-line summary and wrongly said the buffer warning was missing in the official run; the full findings showed it was there, so we corrected the reflection and restored that line to the #103 outcome. The audit also showed the draft leak was systematic (6 runs with "check_stock", 7 with the SKU) and that several #103 reruns were identical to the token, which is why only changing the rules fixed it.
 
 ---
